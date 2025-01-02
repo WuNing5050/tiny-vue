@@ -264,6 +264,13 @@ export const emitChange =
             break
           }
         }
+      } else {
+        for (let i = 0; i < arr.length; i++) {
+          if (val === arr[i].value) {
+            items.push(arr[i])
+            break
+          }
+        }
       }
     }
 
@@ -290,6 +297,13 @@ export const emitChange =
         })
 
         emit('change', value, items)
+      } else if (!props.renderType) {
+        const optionsData = state.options
+        const items = []
+        ;(props.multiple ? value : [value]).forEach((valueItem) => {
+          seekItem(valueItem, optionsData, items)
+        })
+        emit('change', value, props.multiple ? items : items[0])
       } else {
         emit('change', value)
       }
